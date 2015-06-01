@@ -6,6 +6,7 @@
 package algorytmwsad;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  *
@@ -20,13 +21,22 @@ public class InstancjaProblemu {
     private ArrayList<Zadanie> zadania;
     private ArrayList<Zadanie> t;
     private ArrayList<Zadanie> e;
-            
+
+    /**
+     * Konstruktor bez parametrow. Tworzy nowe listy
+     */
     public InstancjaProblemu(){
         zadania = new ArrayList<>();
         e = new ArrayList<>();
         t = new ArrayList<>();
     }
-      
+    /**
+     * Konstuktor Instancji Problemu z parametrami
+     * @param liczbaZadan liczba zadan w problemie
+     * @param terminZakonczenia wspolny termin zakonczenia zadan
+     * @param alfa wspolczynnik alfa
+     * @param beta wspolczynnik beta
+     */
     public InstancjaProblemu(int liczbaZadan, int terminZakonczenia, int alfa, int beta){
         this.liczbaZadan = liczbaZadan;
         this.terminZakonczenia = terminZakonczenia;
@@ -37,6 +47,19 @@ public class InstancjaProblemu {
         t = new ArrayList<>();
     }
     
+    public void sort(){
+        zadania.sort(new Comparator<Zadanie>(){
+            @Override
+            public int compare (Zadanie zad1, Zadanie zad2){
+                return zad1.compareTo(zad2);
+            }
+        });
+    }
+        
+    /**
+     * Metoda majaca na celu sprawdzenie czy problem mozna okreslic jako dowolny. W przypadku wykrycia restryktywnosci, rzucany jest wyjatek. 
+     * Obliczane na podstawie: dlugosc zadan w zbiorze e < termin zakonczenia
+     */
     public void checkIfCorrect(){
         int value=0;
         for (Zadanie zadanie : e) {
@@ -46,7 +69,11 @@ public class InstancjaProblemu {
             throw new IllegalArgumentException("Problemu nie mozna rozwiazac, gdyz termin zakonczenia jest restryktywny");
         }
     }
+    /**
+     * Metoda odpowiedzialna za obliczenie algorytmu.
+     */
     public void algorithm(){
+        sort();
         for (Zadanie zadanie : zadania) {
             if(alfa*e.size()<beta*(t.size()+1)){
                 e.add(zadanie);
@@ -144,7 +171,7 @@ public class InstancjaProblemu {
      * @return the e
      */
     public ArrayList<Zadanie> getE() {
-        return e;
+        return e; 
     }
 
     /**

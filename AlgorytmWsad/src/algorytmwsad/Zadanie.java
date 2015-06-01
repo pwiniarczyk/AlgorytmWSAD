@@ -9,7 +9,7 @@ package algorytmwsad;
  *
  * @author Piotr
  */
-public class Zadanie {
+public class Zadanie implements Comparable<Zadanie>{
     private int numer;
     private int dlugosc;
     
@@ -43,6 +43,12 @@ public class Zadanie {
      */
     public void setDlugosc(int dlugosc) {
         this.dlugosc = dlugosc;
+    }
+
+    @Override
+    public int compareTo(Zadanie o) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    return o.getDlugosc()-this.getDlugosc();
     }
     
 }
